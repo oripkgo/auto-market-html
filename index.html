@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoTrade - 자동매매 플랫폼</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      position: relative; /* 햄버거 메뉴 드롭다운 위치 위해 */
+    }
+
+    .logo {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+
+    .logo small {
+      color: #ccc;
+      font-size: 0.9em;
+    }
+
+    nav {
+      flex: 2;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .auth-buttons {
+      flex: 1;
+      min-width: 200px;
+      text-align: right;
+    }
+
+    .auth-buttons a {
+      color: white;
+      margin-left: 10px;
+      text-decoration: none;
+      border: 1px solid white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .auth-buttons a:hover {
+      background-color: white;
+      color: #333;
+    }
+
+    /* 햄버거 버튼 스타일 */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 22px;
+      justify-content: space-between;
+    }
+
+    .hamburger div {
+      height: 4px;
+      background-color: white;
+      border-radius: 2px;
+    }
+
+    main {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .board-section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    ul.post-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.post-list li {
+      padding: 5px 0;
+      border-bottom: 1px dashed #ddd;
+    }
+
+    ul.post-list li a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    ul.post-list li a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: #f1f1f1;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    footer a {
+      text-decoration: none;
+      color: #333;
+      margin: 0 10px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+
+	.auth-link {
+		display:none;
+	}
+
+
+	.auth-buttons {
+		display:block;
+	}
+
+    /* ✅ 반응형 스타일 */
+    @media (max-width: 768px) {
+      header {
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+
+      /* 햄버거 메뉴 보이기 */
+      .hamburger {
+        display: flex;
+      }
+
+      /* 네비게이션 메뉴 숨기기 (기본) */
+      nav {
+        position: absolute;
+        top: 84px;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        flex: none;
+        text-align: left;
+        display: none;
+        flex-direction: column;
+        padding: 10px 0;
+        z-index: 1000;
+      }
+
+      /* 네비 메뉴 열렸을 때 */
+      nav.show {
+        display: flex;
+      }
+
+      nav a {
+        margin: 10px 20px;
+        font-size: 1.2em;
+      }
+
+      /* 모바일에선 데스크탑용 로그인/회원가입 숨김 */
+      .auth-buttons {
+        display: none;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+	  .auth-link {
+			display:block;
+		}
+
+
+		.auth-buttons {
+			display:none;
+		}
+
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ 헤더 -->
+  <header>
+    <div class="logo">
+      <h1>🤖 AutoTrade</h1>
+      <small>스마트한 자동매매 시스템</small>
+    </div>
+
+    <div class="hamburger" id="hamburger" aria-label="메뉴 열기" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <nav id="navMenu">
+      <a href="/notice.html">공지사항</a>
+      <a href="/free.html">자유게시판</a>
+      <a href="/review.html">후기게시판</a>
+      <a href="/members.html">회원목록</a>
+      <a href="/login.html" class="auth-link">로그인</a>
+      <a href="/signup.html" class="auth-link">회원가입</a>
+    </nav>
+
+    <div class="auth-buttons">
+      <a href="/login.html">로그인</a>
+      <a href="/signup.html">회원가입</a>
+    </div>
+  </header>
+
+  <!-- ✅ 메인 -->
+  <main>
+  
+   <section class="board-section">
+    <div class="section-title">📢 공지사항</div>
+    <ul class="post-list">
+      <li><a href="#">[필독] AutoTrade 서비스 점검 안내 (7/30)</a></li>
+      <li><a href="#">[공지] 신규 기능 업데이트 안내</a></li>
+      <li><a href="#">[공지] 서비스 이용 규칙 변경 사항</a></li>
+    </ul>
+  </section>
+
+    <section class="board-section">
+      <div class="section-title">📌 자유게시판</div>
+      <ul class="post-list">
+        <li><a href="#">[공지] 자유게시판 이용 규칙 안내</a></li>
+        <li><a href="#">오늘 자동매매 수익 공유합니다!</a></li>
+        <li><a href="#">혹시 RSI 기준 쓰는 분 계신가요?</a></li>
+        <li><a href="#">비트코인 전략 토론해요</a></li>
+        <li><a href="#">트레이딩 관련 책 추천해주세요</a></li>
+      </ul>
+    </section>
+
+    <section class="board-section">
+      <div class="section-title">⭐ 후기게시판</div>
+      <!--
+      <ul class="post-list">
+        <li><a href="#">이번 주 수익 후기 (7/22~7/26)</a></li>
+        <li><a href="#">AutoTrade 사용후기 남깁니다</a></li>
+        <li><a href="#">손실 후 리커버리 성공 후기</a></li>
+        <li><a href="#">처음 써봤는데 나쁘지 않네요</a></li>
+        <li><a href="#">백테스트 기능 너무 좋습니다!</a></li>
+      </ul>
+      -->
+
+      <div class="no-posts" style="padding: 20px; color: #888; text-align: center; border: 1px dashed #ccc;">
+        작성된 글이 없습니다.
+      </div>
+    </section>
+
+    <section class="board-section">
+      <div class="section-title">👤 회원목록</div>
+      <ul class="post-list">
+        <li><a href="#">홍길동 (프로 트레이더)</a></li>
+        <li><a href="#">이순신 (전략 개발자)</a></li>
+        <li><a href="#">강감찬 (단타 유저)</a></li>
+        <li><a href="#">김유신 (장기 투자자)</a></li>
+        <li><a href="#">유재석 (관망중)</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- ✅ 푸터 -->
+  <footer>
+    <p><strong>AutoTrade</strong> | 대표: 홍길동 | 이메일: contact@autotrade.com</p>
+    <p>주소: 서울특별시 강남구 테헤란로 123 | 사업자등록번호: 123-45-67890</p>
+    <p>
+      <a href="/terms.html">이용약관</a> |
+      <a href="/privacy.html">개인정보처리방침</a>
+    </p>
+    <p>&copy; 2025 AutoTrade. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+
+    // 외부 클릭 시 메뉴 닫기
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+        navMenu.classList.remove('show');
+      }
+    });
+  </script>
+
+</body>
+</html>
