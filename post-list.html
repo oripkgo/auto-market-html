@@ -1,213 +1,459 @@
-﻿<main>
-  <h1>📌 자유게시판</h1>
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>게시판 | AutoTrade</title>
 
-  <ul class="post-list" id="postList">
-    <!-- 게시글 목록은 JS로 동적 생성 -->
-  </ul>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
 
-  <div class="no-posts" id="noPosts" style="display:none;">
-    작성된 글이 없습니다.
-  </div>
+        main {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
 
-  <div class="pagination" id="pagination">
-    <!-- 페이지 버튼들 -->
-  </div>
+        main h1 {
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .writeBtnArea {
+            display: flex;
+            justify-content: end;
+            margin-bottom: 20px;
+        }
+
+        .writeBtnArea .writeBtn {
+            padding: 6px 12px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background: #fff;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color .2s, color .2s;
+        }
+
+        ul.post-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.post-list li {
+            padding: 15px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        ul.post-list li a.title {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        ul.post-list li a.title:hover {
+            text-decoration: underline;
+        }
+
+        .post-meta {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .post-meta span {
+            margin-right: 15px;
+        }
+
+        .no-posts {
+            padding: 20px;
+            color: #888;
+            text-align: center;
+            border: 1px dashed #ccc;
+            margin-top: 30px;
+        }
+
+        .pagination {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .pagination button {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 1em;
+            min-width: 36px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .pagination button:hover {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        .pagination button.active {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+            cursor: default;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 20px;
+            }
+
+            .pagination {
+                gap: 6px;
+            }
+
+            .pagination button {
+                padding: 8px 10px;
+                min-width: 30px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="common.js"></script>
+    <script>
+        comm.ready();
+    </script>
+</head>
+<body>
+
+<!-- ✅ 헤더 -->
+<header>
+    <div class="logo" onclick="window.location.href='index.html'">
+        <h1>🤖 AutoTrade</h1>
+        <small>스마트한 자동매매 시스템</small>
+    </div>
+
+    <div class="hamburger" id="hamburger" aria-label="메뉴 열기" role="button" tabindex="0">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <nav id="navMenu">
+        <a href="post-list.html?category=notice">공지사항</a>
+        <a href="post-list.html?category=free">자유게시판</a>
+        <a href="post-list.html?category=review">후기게시판</a>
+        <a href="post-list.html?category=account" class="nav-acount" style="display: none;">회원목록</a>
+        <div class="signin-element">
+            <a href="signin.html" class="auth-link">로그인</a>
+        </div>
+        <div class="signin-element">
+            <a href="signup.html" class="auth-link">회원가입</a>
+        </div>
+        <div class="signout-element" style="display: none;">
+            <a href="#" onclick="comm.signout();" class="auth-link">로그아웃</a>
+        </div>
+    </nav>
+
+    <div class="auth-buttons">
+        <div class="signin-element">
+            <a href="signin.html">로그인</a>
+            <a href="signup.html">회원가입</a>
+        </div>
+
+        <div class="signout-element" style="display: none;">
+            <a href="#" onclick="comm.signout();">로그아웃</a>
+        </div>
+    </div>
+</header>
+
+<!-- ✅ 메인 -->
+<main>
+    <h1>📌 <a class="post-title"></a></h1>
+
+    <div class="writeBtnArea">
+        <button class="writeBtn" onclick="goWritePage();" hidden>글쓰기</button>
+    </div>
+
+    <ul class="post-list" id="postList">
+        <!-- 게시글 목록은 JS로 동적 생성 -->
+    </ul>
+
+    <div class="pagination" id="pagination">
+        <!-- 페이지 버튼들 -->
+    </div>
 </main>
 
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #333;
-  }
-
-  main {
-    padding: 40px 20px;
-    max-width: 1000px;
-    margin: auto;
-  }
-
-  main h1 {
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-    font-size: 2em;
-  }
-
-  ul.post-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  ul.post-list li {
-    padding: 15px 0;
-    border-bottom: 1px dashed #ddd;
-  }
-
-  ul.post-list li a.title {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    font-size: 1.1em;
-    display: block;
-    margin-bottom: 6px;
-  }
-
-  ul.post-list li a.title:hover {
-    text-decoration: underline;
-  }
-
-  .post-meta {
-    font-size: 0.9em;
-    color: #777;
-  }
-
-  .post-meta span {
-    margin-right: 15px;
-  }
-
-  .no-posts {
-    padding: 20px;
-    color: #888;
-    text-align: center;
-    border: 1px dashed #ccc;
-    margin-top: 30px;
-  }
-
-  .pagination {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .pagination button {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 6px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 1em;
-    min-width: 36px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-
-  .pagination button:hover {
-    background-color: #333;
-    color: white;
-    border-color: #333;
-  }
-
-  .pagination button.active {
-    background-color: #333;
-    color: white;
-    border-color: #333;
-    cursor: default;
-  }
-
-  @media (max-width: 768px) {
-    main {
-      padding: 20px;
-    }
-
-    .pagination {
-      gap: 6px;
-    }
-
-    .pagination button {
-      padding: 8px 10px;
-      min-width: 30px;
-      font-size: 0.9em;
-    }
-  }
-</style>
+<!-- ✅ 푸터 -->
+<footer>
+    <p>
+        <strong>AutoTrade</strong>
+        <!--| 대표: 홍길동 | 이메일: contact@autotrade.com-->
+    </p>
+    <!--    <p>주소: 서울특별시 강남구 테헤란로 123 | 사업자등록번호: 123-45-67890</p>-->
+    <p>
+        <a href="terms.html">이용약관</a> |
+        <a href="privacy.html">개인정보처리방침</a>
+    </p>
+    <p>&copy; 2025 AutoTrade. All rights reserved.</p>
+</footer>
 
 <script>
-  const posts = [
-    { title: '[공지] 자유게시판 이용 규칙 안내', author: '관리자', date: '2025-07-01' },
-    { title: '오늘 자동매매 수익 공유합니다!', author: '홍길동', date: '2025-07-25' },
-    { title: '혹시 RSI 기준 쓰는 분 계신가요?', author: '이순신', date: '2025-07-23' },
-    { title: '비트코인 전략 토론해요', author: '강감찬', date: '2025-07-20' },
-    { title: '트레이딩 관련 책 추천해주세요', author: '김유신', date: '2025-07-18' },
-    { title: '신규 전략 문의', author: '유재석', date: '2025-07-15' },
-    { title: '자동매매 초보 질문 있습니다.', author: '박명수', date: '2025-07-13' },
-    { title: '시스템 오류 문의', author: '정형돈', date: '2025-07-10' },
-    { title: '백테스트 결과 공유', author: '하하', date: '2025-07-08' },
-    { title: '알고리즘 개선 아이디어', author: '양세형', date: '2025-07-05' },
-    { title: '최근 시장 동향', author: '조세호', date: '2025-07-03' },
-    { title: '이벤트 안내', author: '김종국', date: '2025-07-01' },
-    { title: 'API 사용법 질문', author: '강호동', date: '2025-06-28' },
-    { title: '트레이딩 봇 설정법', author: '서장훈', date: '2025-06-25' },
-    { title: '서버 안정화 작업 완료', author: '김종민', date: '2025-06-20' },
-  ];
 
-  const postsPerPage = 10;
-  let currentPage = 1;
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+    const isLogin = sessionStorage.getItem("isLogin") === 'Y' ? true : false;
+    const userLevel = sessionStorage.getItem('userLevel');
+    let postUrl = `/posts/${category}`;
 
-  const postListEl = document.getElementById('postList');
-  const paginationEl = document.getElementById('pagination');
-  const noPostsEl = document.getElementById('noPosts');
-
-  function renderPosts() {
-    postListEl.innerHTML = '';
-
-    if(posts.length === 0) {
-      noPostsEl.style.display = 'block';
-      paginationEl.style.display = 'none';
-      return;
-    } else {
-      noPostsEl.style.display = 'none';
-      paginationEl.style.display = 'flex';
+    if (category === 'account') {
+        postUrl = '/users';
     }
 
-    const start = (currentPage -1) * postsPerPage;
-    const end = start + postsPerPage;
-    const pagePosts = posts.slice(start, end);
+    if (category === 'free') {
+        document.title = "자유게시판 | AutoTrade";
+        document.querySelector('.post-title').innerText = "자유게시판";
+    } else if (category === 'notice') {
+        document.title = "공지사항 | AutoTrade";
+        document.querySelector('.post-title').innerText = "공지사항";
+    } else if (category === 'review') {
+        document.title = "후기게시판 | AutoTrade";
+        document.querySelector('.post-title').innerText = "후기게시판";
 
-    for(const post of pagePosts) {
-      const li = document.createElement('li');
+    } else if (category === 'account') {
+        document.title = "회원목록 | AutoTrade";
+        document.querySelector('.post-title').innerText = "회원목록";
+    }
 
-      const a = document.createElement('a');
-      a.href = "#";
-      a.textContent = post.title;
-      a.className = 'title';
+    const postListEl = document.getElementById('postList');
+    const paginationEl = document.getElementById('pagination');
+    const noPostsEl = document.getElementById('noPosts');
 
-      const meta = document.createElement('div');
-      meta.className = 'post-meta';
-      meta.innerHTML = `
-        <span>작성자: ${post.author}</span>
-        <span>작성일: ${post.date}</span>
+    function renderPosts(posts) {
+
+        postListEl.innerHTML = '';
+
+        if (posts.length === 0) {
+            paginationEl.style.display = 'none';
+            return;
+        } else {
+            paginationEl.style.display = 'flex';
+        }
+
+        const pagePosts = posts;
+
+        for (const post of pagePosts) {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = `post-detail.html?id=${post.id}&category=${category}`;
+            a.textContent = post.title;
+            a.className = 'title';
+
+            const meta = document.createElement('div');
+            meta.className = 'post-meta';
+            meta.innerHTML = `
+        <span>작성자: ${post.userName}</span>
+        <span>작성일: ${comm.formatLocalDateTime(post.createdAt)}</span>
       `;
 
-      li.appendChild(a);
-      li.appendChild(meta);
-      postListEl.appendChild(li);
+            li.appendChild(a);
+            li.appendChild(meta);
+            postListEl.appendChild(li);
+        }
     }
-  }
 
-  function renderPagination() {
-    paginationEl.innerHTML = '';
-    const totalPages = Math.ceil(posts.length / postsPerPage);
 
-    for(let i=1; i<=totalPages; i++) {
-      const btn = document.createElement('button');
-      btn.textContent = i;
-      if(i === currentPage) {
-        btn.classList.add('active');
-        btn.disabled = true;
-      }
-      btn.addEventListener('click', () => {
-        currentPage = i;
-        renderPosts();
-        renderPagination();
+    function renderUsers(posts) {
+
+        postListEl.innerHTML = '';
+
+        if (posts.length === 0) {
+            paginationEl.style.display = 'none';
+            return;
+        } else {
+            paginationEl.style.display = 'flex';
+        }
+
+        const pagePosts = posts;
+
+        for (const post of pagePosts) {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+
+            a.innerHTML = `
+              이름 : ${post.name}<br>
+              성별 : ${comm.getGender(post.gender)}<br>
+              이메일 : ${post.email}<br>
+              폰번호 : ${post.phoneNumber}<br>
+              가입일 : ${comm.formatLocalDateTime(post.createdAt)}
+            `;
+
+
+            li.appendChild(a);
+            postListEl.appendChild(li);
+        }
+    }
+
+
+    function renderPagination(total, currentPage, postsPerPage) {
+        paginationEl.innerHTML = '';
+        const totalPages = Math.ceil(total / postsPerPage);
+
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+
+            if (i === currentPage) {
+                btn.classList.add('active');
+                btn.disabled = true;
+            }
+
+            // 이벤트 대신 onclick 속성에 함수 호출 연결
+            btn.setAttribute('onclick', `goToPage(${i})`);
+
+            paginationEl.appendChild(btn);
+        }
+    }
+
+    // 페이지 이동 처리 함수 (이벤트 함수 분리)
+    function goToPage(page) {
+        if (category === 'account') {
+            renderUserList(postUrl, category, "#postList", page);
+        } else {
+            renderPostList(postUrl, category, "#postList", page);
+        }
+
+
         window.scrollTo({top: 0, behavior: 'smooth'});
-      });
-      paginationEl.appendChild(btn);
     }
-  }
 
-  renderPosts();
-  renderPagination();
+    const renderPostList = (url, category, renderTarget, currentPage) => {
+        comm.requestAPI({
+            url: url,
+            method: 'GET',
+            data: {page: currentPage || 1},
+            onSuccess: function (res) {
+                if (res?.data && res?.data.length > 0) {
+                    renderPosts(res?.data, res?.page, res?.limit)
+                    renderPagination(res?.total, res?.page, res?.limit);
+                } else {
+                    let listHtml = `
+                <div class="no-posts">
+                    작성된 글이 없습니다.
+                </div>
+            `
+
+                    document.querySelector(`${renderTarget}`).innerHTML = listHtml;
+                }
+
+            },
+
+            onError: function () {
+                let listHtml = `
+                <div class="no-posts">
+                    작성된 글이 없습니다.
+                </div>
+            `
+
+                document.querySelector(`${renderTarget}`).innerHTML = listHtml;
+            }
+
+        })
+    }
+
+    const goWritePage = () => {
+        window.location.href = `post-write.html?category=${category}`;
+    }
+
+
+    const renderUserList = (url, category, renderTarget, currentPage) => {
+        comm.requestAPI({
+            url: url,
+            method: 'GET',
+            data: {page: currentPage || 1},
+            onSuccess: function (res) {
+                if (res?.data && res?.data.length > 0) {
+                    renderUsers(res?.data);
+                    renderPagination(res?.total, res?.page, res?.limit);
+                } else {
+                    let listHtml = `
+                <div class="no-posts">
+                    등록된 회원이 없습니다.
+                </div>
+            `
+                    document.querySelector(`${renderTarget}`).innerHTML = listHtml;
+                }
+
+            },
+            onError: function () {
+                let listHtml = `
+                <div class="no-posts">
+                    등록된 회원이 없습니다.
+                </div>
+            `
+
+                document.querySelector(`${renderTarget}`).innerHTML = listHtml;
+            }
+        })
+    }
+
+    // 버튼 바인딩
+    function bindPostWriteButton() {
+        const postWriteButton = document.querySelector('.writeBtn');
+        let canEdit = isLogin;
+
+        if( category === 'notice' ){
+            canEdit = isLogin && userLevel >= 8;
+        }
+
+        if( category === 'account' ){
+            canEdit = false;
+        }
+
+        if (!canEdit) {
+            postWriteButton.hidden = true;
+            return;
+        }
+
+        postWriteButton.hidden = false;
+    }
+
+    bindPostWriteButton();
+
+    if (category === 'account') {
+        renderUserList(postUrl, category, "#postList");
+    } else {
+        renderPostList(postUrl, category, "#postList");
+    }
+
+
+
+
 </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

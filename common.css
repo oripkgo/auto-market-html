@@ -1,0 +1,226 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* 햄버거 메뉴 드롭다운 위치 위해 */
+}
+
+.logo {
+    flex: 1;
+    min-width: 200px;
+    cursor: pointer;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.logo small {
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+nav {
+    flex: 2;
+    min-width: 200px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.auth-buttons {
+    flex: 1;
+    min-width: 200px;
+    text-align: right;
+}
+
+.auth-buttons a {
+    color: white;
+    margin-left: 10px;
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.auth-buttons a:hover {
+    background-color: white;
+    color: #333;
+}
+
+/* 햄버거 버튼 스타일 */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    width: 30px;
+    height: 22px;
+    justify-content: space-between;
+}
+
+.hamburger div {
+    height: 4px;
+    background-color: white;
+    border-radius: 2px;
+}
+
+main {
+    padding: 40px 20px;
+    max-width: 1000px;
+    min-height: 600px;
+    margin: auto;
+}
+
+main a {
+    font-size: 14px;
+}
+
+main button {
+    font-size: 14px;
+}
+
+.board-section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+ul.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+ul.post-list li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+ul.post-list li a {
+    text-decoration: none;
+    color: #333;
+}
+
+ul.post-list li a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background-color: #f1f1f1;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+footer p {
+    margin: 5px 0;
+    color: #555;
+}
+
+footer a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+.auth-link {
+    display: none;
+}
+
+
+.auth-buttons {
+    display: block;
+}
+
+.no-posts {
+    padding: 20px;
+    color: #888;
+    text-align: center;
+    border: 1px dashed #ccc;
+}
+
+/* ✅ 반응형 스타일 */
+@media (max-width: 768px) {
+    header {
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    /* 햄버거 메뉴 보이기 */
+    .hamburger {
+        display: flex;
+    }
+
+    /* 네비게이션 메뉴 숨기기 (기본) */
+    nav {
+        position: absolute;
+        top: 84px;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        flex: none;
+        text-align: left;
+        display: none;
+        flex-direction: column;
+        padding: 10px 0;
+        z-index: 1000;
+    }
+
+    /* 네비 메뉴 열렸을 때 */
+    nav.show {
+        display: flex;
+    }
+
+    nav a {
+        margin: 10px 20px;
+        font-size: 1.2em;
+    }
+
+    /* 모바일에선 데스크탑용 로그인/회원가입 숨김 */
+    .auth-buttons {
+        display: none;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .auth-link {
+        display: block;
+    }
+
+
+    .auth-buttons {
+        display: none;
+    }
+
+}
+
+
+

@@ -1,158 +1,285 @@
 ﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>게시글 작성</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-    }
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>이용약관 | AutoTrade</title>
 
-    main {
-      max-width: 700px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px 40px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 6px;
-    }
+    <link rel="stylesheet" href="common.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+        }
 
-    h2 {
-      margin-bottom: 30px;
-      font-size: 1.8em;
-      color: #333;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 10px;
-    }
+        main {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+        }
 
-    form {
-      display: flex;
-      flex-direction: column;
-    }
+        h2 {
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            color: #333;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
 
-    label {
-      margin-bottom: 6px;
-      font-weight: bold;
-      color: #444;
-    }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
 
-    input[type="text"],
-    textarea,
-    select {
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1em;
-      font-family: inherit;
-    }
+        label {
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #444;
+        }
 
-    textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
+        input[type="text"],
+        textarea,
+        select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            font-family: inherit;
+        }
 
-    .btn-group {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-    }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
 
-    button {
-      background-color: #333;
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      font-size: 1em;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
 
-    button:hover {
-      background-color: #555;
-    }
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    button.cancel {
-      background-color: #aaa;
-    }
+        button:hover {
+            background-color: #555;
+        }
 
-    button.cancel:hover {
-      background-color: #888;
-    }
+        button.cancel {
+            background-color: #aaa;
+        }
 
-    @media (max-width: 480px) {
-      main {
-        padding: 20px;
-        margin: 20px;
-      }
-      button {
-        flex: 1;
-        padding: 12px 0;
-      }
-      .btn-group {
-        flex-direction: column;
-        gap: 10px;
-      }
-    }
-  </style>
+        button.cancel:hover {
+            background-color: #888;
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            button {
+                flex: 1;
+                padding: 12px 0;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="common.js"></script>
+    <script>
+        comm.ready();
+    </script>
 </head>
 <body>
 
-<main>
-  <h2>게시글 작성</h2>
-  <form id="postForm">
-    <label for="category">카테고리</label>
-    <select id="category" name="category" required>
-      <option value="" disabled selected>카테고리를 선택하세요</option>
-      <option value="notice">공지사항</option>
-      <option value="free">자유게시판</option>
-      <option value="review">후기게시판</option>
-      <option value="members">회원목록</option>
-    </select>
-
-    <label for="title">제목</label>
-    <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required />
-
-    <label for="author">작성자</label>
-    <input type="text" id="author" name="author" placeholder="작성자 이름을 입력하세요" required />
-
-    <label for="content">내용</label>
-    <textarea id="content" name="content" placeholder="내용을 입력하세요" required></textarea>
-
-    <div class="btn-group">
-      <button type="button" class="cancel" onclick="history.back()">취소</button>
-      <button type="submit">저장</button>
+<!-- ✅ 헤더 -->
+<header>
+    <div class="logo" onclick="window.location.href='index.html'">
+        <h1>🤖 AutoTrade</h1>
+        <small>스마트한 자동매매 시스템</small>
     </div>
-  </form>
+
+    <div class="hamburger" id="hamburger" aria-label="메뉴 열기" role="button" tabindex="0">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <nav id="navMenu">
+        <a href="post-list.html?category=notice">공지사항</a>
+        <a href="post-list.html?category=free">자유게시판</a>
+        <a href="post-list.html?category=review">후기게시판</a>
+        <a href="post-list.html?category=account" class="nav-acount" style="display: none;">회원목록</a>
+        <div class="signin-element">
+            <a href="signin.html" class="auth-link">로그인</a>
+        </div>
+        <div class="signin-element">
+            <a href="signup.html" class="auth-link">회원가입</a>
+        </div>
+        <div class="signout-element" style="display: none;">
+            <a href="#" onclick="comm.signout();" class="auth-link">로그아웃</a>
+        </div>
+    </nav>
+
+    <div class="auth-buttons">
+        <div class="signin-element">
+            <a href="signin.html">로그인</a>
+            <a href="signup.html">회원가입</a>
+        </div>
+
+        <div class="signout-element" style="display: none;">
+            <a href="#" onclick="comm.signout();">로그아웃</a>
+        </div>
+    </div>
+
+</header>
+
+<!-- ✅ 메인 -->
+<main>
+    <h2>게시글 작성</h2>
+    <form id="postForm">
+        <label for="category">카테고리</label>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>카테고리를 선택하세요</option>
+            <option value="notice">공지사항</option>
+            <option value="free">자유게시판</option>
+            <option value="review">후기게시판</option>
+        </select>
+
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required/>
+
+        <label for="content">내용</label>
+        <textarea id="content" name="content" placeholder="내용을 입력하세요" required></textarea>
+
+        <div class="btn-group">
+            <button type="button" class="cancel" onclick="history.back()">취소</button>
+            <button type="submit">저장</button>
+        </div>
+    </form>
 </main>
 
+<!-- ✅ 푸터 -->
+<footer>
+    <p><strong>AutoTrade</strong> <!--| 대표: 홍길동 | 이메일: contact@autotrade.com--></p>
+    <!--    <p>주소: 서울특별시 강남구 테헤란로 123 | 사업자등록번호: 123-45-67890</p>-->
+    <p>
+        <a href="terms.html">이용약관</a> |
+        <a href="privacy.html">개인정보처리방침</a>
+    </p>
+    <p>&copy; 2025 AutoTrade. All rights reserved.</p>
+</footer>
+
 <script>
-  const form = document.getElementById('postForm');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+    const postId = params.get("id");
+    const postUrl = `/posts/${category}`;
+    const postGetUrl = `/posts/${category}/${postId}`;
 
-    const category = form.category.value;
-    const title = form.title.value.trim();
-    const author = form.author.value.trim();
-    const content = form.content.value.trim();
-
-    if (!category) {
-      alert('카테고리를 선택해주세요.');
-      return;
-    }
-    if (!title || !author || !content) {
-      alert('모든 항목을 입력해주세요.');
-      return;
+    const goList = function () {
+        window.location.href = `post-list.html?category=${category}`;
     }
 
-    alert(`게시글 저장 완료!\n카테고리: ${category}\n제목: ${title}\n작성자: ${author}`);
-    form.reset();
-  });
+    const initPostDetail = () => {
+        comm.requestAPI({
+            url: postGetUrl,
+            method: 'GET',
+            onSuccess: function (res) {
+
+                // 제목
+                document.querySelector('#title').value = res.title;
+
+                // 본문
+                document.querySelector('#content').value = res.content;
+
+            },
+
+        })
+
+    }
+
+    const form = document.getElementById('postForm');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const category = form.category.value;
+        const title = form.title.value.trim();
+        const content = form.content.value.trim();
+
+        if (!category) {
+            alert('카테고리를 선택해주세요.');
+            return;
+        }
+        if (!title || !content) {
+            alert('모든 항목을 입력해주세요.');
+            return;
+        }
+
+        if (postId) {
+            comm.requestAPI({
+                url: postUrl,
+                method: 'PUT',
+                data: {title, content, id: postId},
+                onSuccess: function (res) {
+                    alert('수정이 완료되었습니다.');
+                    goList();
+                },
+                onError: function (err) {
+                    console.error('게시물 등록 중 오류 발생:', err);
+                    alert('게시물 등록에 실패했습니다.\n잠시 후 다시 시도해주세요.');
+                }
+            })
+        } else {
+            comm.requestAPI({
+                url: postUrl,
+                method: 'POST',
+                data: {category, title, content},
+                onSuccess: function (res) {
+                    alert('등록이 완료되었습니다.');
+                    goList();
+                },
+                onError: function (err) {
+                    console.error('게시물 등록 중 오류 발생:', err);
+                    alert('게시물 등록에 실패했습니다.\n잠시 후 다시 시도해주세요.');
+                }
+            })
+        }
+    });
+
+
+    const categorySelect = document.getElementById('category');
+    categorySelect.value = category;
+    categorySelect.disabled = true;
+
+
+    if (postId) {
+        initPostDetail();
+    }
+
+
 </script>
 
 </body>
 </html>
+
+
+

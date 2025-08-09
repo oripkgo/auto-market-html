@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>회원가입 | AutoTrade</title>
+
+  <link rel="stylesheet" href="common.css">
+  <style>
+    body {
+      margin: 0; font-family: Arial, sans-serif; background: #f9f9f9;
+    }
+    main {
+      max-width: 700px; margin: 40px auto; background: white;
+      padding: 30px 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 6px;
+    }
+    h2 {
+      margin-bottom: 30px; font-size: 1.8em; color: #333;
+      border-bottom: 2px solid #ccc; padding-bottom: 10px;
+    }
+    form {
+      display: flex; flex-direction: column;
+    }
+    label {
+      margin-bottom: 6px; font-weight: bold; color: #444;
+    }
+    input[type="text"],
+    input[type="password"],
+    select {
+      padding: 10px; margin-bottom: 20px;
+      border: 1px solid #ccc; border-radius: 4px;
+      font-size: 1em; font-family: inherit;
+    }
+    .checkbox-group {
+      margin-bottom: 20px;
+    }
+    .checkbox-group label {
+      font-weight: normal; color: #555;
+    }
+    .checkbox-group a {
+      color: #0066cc; text-decoration: none;
+    }
+    .checkbox-group a:hover {
+      text-decoration: underline;
+    }
+    .btn-group {
+      display: flex; justify-content: flex-end; gap: 12px;
+    }
+    button {
+      background-color: #333; color: white; border: none;
+      padding: 12px 25px; font-size: 1em; border-radius: 4px;
+      cursor: pointer; transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #555;
+    }
+    button.cancel {
+      background-color: #aaa;
+    }
+    button.cancel:hover {
+      background-color: #888;
+    }
+    @media (max-width: 480px) {
+      main { padding: 20px; margin: 20px; }
+      button { flex: 1; padding: 12px 0; }
+      .btn-group { flex-direction: column; gap: 10px; }
+    }
+  </style>
+  <script type="text/javascript" src="common.js"></script>
+  <script>
+    comm.ready();
+  </script>
+</head>
+<body>
+
+<!-- ✅ 헤더 -->
+<header>
+  <div class="logo" onclick="window.location.href='index.html'">
+    <h1>🤖 AutoTrade</h1>
+    <small>스마트한 자동매매 시스템</small>
+  </div>
+
+  <div class="hamburger" id="hamburger" aria-label="메뉴 열기" role="button" tabindex="0">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <nav id="navMenu">
+    <a href="post-list.html?category=notice">공지사항</a>
+    <a href="post-list.html?category=free">자유게시판</a>
+    <a href="post-list.html?category=review">후기게시판</a>
+    <a href="post-list.html?category=account" class="nav-acount" style="display: none;">회원목록</a>
+    <div class="signin-element">
+      <a href="signin.html" class="auth-link">로그인</a>
+    </div>
+    <div class="signin-element">
+      <a href="signup.html" class="auth-link">회원가입</a>
+    </div>
+    <div class="signout-element" style="display: none;">
+      <a href="#" onclick="comm.signout();"  class="auth-link">로그아웃</a>
+    </div>
+  </nav>
+
+  <div class="auth-buttons">
+    <div class="signin-element">
+      <a href="signin.html">로그인</a>
+      <a href="signup.html">회원가입</a>
+    </div>
+
+    <div class="signout-element" style="display: none;">
+      <a href="#" onclick="comm.signout();">로그아웃</a>
+    </div>
+  </div>
+</header>
+
+<!-- ✅ 메인 -->
+<main>
+  <h2>회원가입</h2>
+  <form id="signupForm">
+    <label for="email">이메일</label>
+    <input type="text" id="email" name="email" placeholder="이메일을 입력하세요"
+           required
+           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+           title="올바른 이메일 형식을 입력하세요. 예: example@domain.com"
+    />
+
+    <label for="password">비밀번호</label>
+    <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required />
+
+    <label for="name">이름</label>
+    <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required />
+
+    <label for="phone">휴대폰번호</label>
+    <input type="text" id="phone" name="phone" placeholder="예: 010-1234-5678" required pattern="^\d{3}-\d{3,4}-\d{4}$" title="예: 010-1234-5678 또는 010-123-5678 형식으로 입력하세요" />
+
+    <label for="gender">성별 (선택)</label>
+    <select id="gender" name="gender">
+      <option value="" selected>선택 안 함</option>
+      <option value="male">남성</option>
+      <option value="female">여성</option>
+      <option value="other">기타</option>
+    </select>
+
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="agreePrivacy" required /> 개인정보 수집 및 이용에 동의합니다. (<a href="privacy.html" target="_blank" rel="noopener noreferrer">개인정보 처리방침</a>)</label>
+      <p style="font-size: 0.9em; color: #555; margin-left: 24px; margin-top: 4px;">
+        <strong>수집목적:</strong> 회원관리, 서비스 제공 및 개선<br/>
+        <strong>수집항목:</strong> 이메일, 비밀번호, 이름, 휴대폰번호, 성별(선택)<br/>
+        <strong>보유기간:</strong> 회원 탈퇴 시까지 보유 및 파기<br/>
+        <strong>제3자 제공:</strong> 없음 (제공 시 별도 동의 받음)
+      </p>
+    </div>
+
+
+
+    <div class="btn-group">
+      <button type="button" class="cancel" onclick="history.back()">취소</button>
+      <button type="submit">회원가입</button>
+    </div>
+  </form>
+</main>
+
+<!-- ✅ 푸터 -->
+<footer>
+  <p><strong>AutoTrade</strong> <!--| 대표: 홍길동 | 이메일: contact@autotrade.com--></p>
+  <!--    <p>주소: 서울특별시 강남구 테헤란로 123 | 사업자등록번호: 123-45-67890</p>-->
+  <p>
+    <a href="terms.html">이용약관</a> |
+    <a href="privacy.html">개인정보처리방침</a>
+  </p>
+  <p>&copy; 2025 AutoTrade. All rights reserved.</p>
+</footer>
+
+<script>
+  const form = document.getElementById('signupForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!form.agreePrivacy.checked) {
+      alert('개인정보 수집 및 이용에 동의해 주세요.');
+      return;
+    }
+
+    // 기본적인 폼 값 검증은 브라우저가 처리(필수, 패턴 등)
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const gender = document.getElementById('gender').value;
+    const agreePrivacy = document.getElementById('agreePrivacy').checked; // 체크박스는 checked로
+
+    comm.requestAPI({
+        url: '/sign/up',
+        method: 'POST',
+        data: {email, password, name, phone, gender, agreePrivacy },
+        onSuccess: function (res) {
+          alert('회원가입이 완료되었습니다!');
+          window.location.href = 'signin.html';
+        },
+        onError: function (err) {
+            console.error('실패:', err.message);
+            alert(err.message);
+        }
+    });
+
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+

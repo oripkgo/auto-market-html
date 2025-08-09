@@ -1,99 +1,301 @@
 ﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>게시글 상세 | AutoTrade</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #333;
-    }
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>이용약관 | AutoTrade</title>
 
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+    <link rel="stylesheet" href="common.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
 
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-      text-decoration: none;
-      color: #333;
-      border: 1px solid #333;
-      padding: 6px 12px;
-      border-radius: 5px;
-      transition: background-color 0.3s, color 0.3s;
-    }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
 
-    .back-link:hover {
-      background-color: #333;
-      color: white;
-    }
+        .back-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #333;
+            padding: 6px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-    h1.post-title {
-      margin: 0 0 10px 0;
-      font-size: 2em;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 10px;
-    }
+        .back-link:hover {
+            background-color: #333;
+            color: white;
+        }
 
-    .post-meta {
-      color: #777;
-      font-size: 0.9em;
-      margin-bottom: 30px;
-    }
+        h1.post-title {
+            margin: 0 0 10px 0;
+            font-size: 2em;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
 
-    .post-content {
-      line-height: 1.6;
-      font-size: 1.1em;
-      white-space: pre-wrap;
-      border: 1px solid #ddd;
-      padding: 20px;
-      border-radius: 6px;
-      background-color: #fafafa;
-      min-height: 200px;
-    }
+        .post-meta {
+            color: #777;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
 
-    @media (max-width: 768px) {
-      main {
-        padding: 20px;
-      }
-      .post-title {
-        font-size: 1.5em;
-      }
-    }
-  </style>
+        .post-content {
+            line-height: 1.6;
+            font-size: 1.1em;
+            white-space: pre-wrap;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 6px;
+            background-color: #fafafa;
+            min-height: 200px;
+        }
+
+        .post-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .post-actions .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background: #fff;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color .2s, color .2s;
+        }
+
+        .post-actions .btn:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        .post-actions .btn-danger {
+            border-color: #b00020;
+            color: #b00020;
+        }
+
+        .post-actions .btn-danger:hover {
+            background: #b00020;
+            color: #fff;
+        }
+
+        .post-actions[hidden] {
+            display: none !important;
+        }
+
+
+        @media (max-width: 768px) {
+            main {
+                padding: 20px;
+            }
+
+            .post-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="common.js"></script>
+    <script>
+        comm.ready();
+    </script>
 </head>
 <body>
 
-  <main>
-    <a href="/free.html" class="back-link">&larr; 목록으로 돌아가기</a>
-
-    <h1 class="post-title">[공지] 자유게시판 이용 규칙 안내</h1>
-    <div class="post-meta">
-      작성자: 관리자 | 작성일: 2025-07-01
+<!-- ✅ 헤더 -->
+<header>
+    <div class="logo" onclick="window.location.href='index.html'">
+        <h1>🤖 AutoTrade</h1>
+        <small>스마트한 자동매매 시스템</small>
     </div>
+
+    <div class="hamburger" id="hamburger" aria-label="메뉴 열기" role="button" tabindex="0">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <nav id="navMenu">
+        <a href="post-list.html?category=notice">공지사항</a>
+        <a href="post-list.html?category=free">자유게시판</a>
+        <a href="post-list.html?category=review">후기게시판</a>
+        <a href="post-list.html?category=account" class="nav-acount" style="display: none;">회원목록</a>
+        <div class="signin-element">
+            <a href="signin.html" class="auth-link">로그인</a>
+        </div>
+        <div class="signin-element">
+            <a href="signup.html" class="auth-link">회원가입</a>
+        </div>
+        <div class="signout-element" style="display: none;">
+            <a href="#" onclick="comm.signout();" class="auth-link">로그아웃</a>
+        </div>
+    </nav>
+
+    <div class="auth-buttons">
+        <div class="signin-element">
+            <a href="signin.html">로그인</a>
+            <a href="signup.html">회원가입</a>
+        </div>
+
+        <div class="signout-element" style="display: none;">
+            <a href="#" onclick="comm.signout();">로그아웃</a>
+        </div>
+    </div>
+
+</header>
+
+<!-- ✅ 메인 -->
+<main>
+    <div class="post-header-actions">
+        <a href="#" class="back-link" onclick="goList()">&larr; 목록으로 돌아가기</a>
+        <div class="post-actions" id="postActions" hidden>
+            <a href="#" id="editBtn" class="btn" onclick="goUpdatePage();">수정</a>
+            <button type="button" id="deleteBtn" class="btn btn-danger" onclick="deletePost();">삭제</button>
+        </div>
+    </div>
+
+
+    <h1 class="post-title"><!--[공지] 자유게시판 이용 규칙 안내--></h1>
+    <div class="post-meta">
+        <!--작성자: 관리자 | 작성일: 2025-07-01-->
+    </div>
+
 
     <div class="post-content">
-      안녕하세요, AutoTrade 자유게시판을 이용해 주셔서 감사합니다.
+        <!--안녕하세요, AutoTrade 자유게시판을 이용해 주셔서 감사합니다.
 
-      본 게시판은 자동매매 관련 자유로운 의견 교환과 정보 공유를 위한 공간입니다.
+        본 게시판은 자동매매 관련 자유로운 의견 교환과 정보 공유를 위한 공간입니다.
 
-      이용 시 아래 사항을 준수해 주세요:
+        이용 시 아래 사항을 준수해 주세요:
 
-      1. 타인의 인격을 존중하고 비방, 욕설 등의 부적절한 언행 금지  
-      2. 상업적 광고, 스팸 게시물 금지  
-      3. 개인정보 노출 금지 및 개인정보 침해 금지  
-      4. 불법 행위 또는 법률 위반 내용 게시 금지  
+        1. 타인의 인격을 존중하고 비방, 욕설 등의 부적절한 언행 금지
+        2. 상업적 광고, 스팸 게시물 금지
+        3. 개인정보 노출 금지 및 개인정보 침해 금지
+        4. 불법 행위 또는 법률 위반 내용 게시 금지
 
-      위 규칙을 위반할 경우 게시글 삭제 및 회원 제재가 있을 수 있으니 유의해 주시기 바랍니다.
+        위 규칙을 위반할 경우 게시글 삭제 및 회원 제재가 있을 수 있으니 유의해 주시기 바랍니다.
 
-      앞으로도 여러분의 활발한 참여 부탁드립니다. 감사합니다.
+        앞으로도 여러분의 활발한 참여 부탁드립니다. 감사합니다.-->
     </div>
-  </main>
+</main>
 
+<!-- ✅ 푸터 -->
+<footer>
+    <p><strong>AutoTrade</strong> <!--| 대표: 홍길동 | 이메일: contact@autotrade.com--></p>
+    <!--    <p>주소: 서울특별시 강남구 테헤란로 123 | 사업자등록번호: 123-45-67890</p>-->
+    <p>
+        <a href="terms.html">이용약관</a> |
+        <a href="privacy.html">개인정보처리방침</a>
+    </p>
+    <p>&copy; 2025 AutoTrade. All rights reserved.</p>
+</footer>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+    const postId = params.get("id");
+    const isLogin = sessionStorage.getItem("isLogin") === 'Y' ? true : false;
+    const sessionUserId = sessionStorage.getItem("userId")
+    const postUrl = `/posts/${category}/${postId}`;
+
+    if (category === 'free') {
+        document.title = "자유 상세 | AutoTrade";
+        document.querySelector('.post-title').innerText = "자유게시판";
+    } else if (category === 'notice') {
+        document.title = "공지 상세 | AutoTrade";
+        document.querySelector('.post-title').innerText = "공지사항";
+    } else if (category === 'review') {
+        document.title = "후기 상세 | AutoTrade";
+        document.querySelector('.post-title').innerText = "후기게시판";
+    }
+
+    const goList = function () {
+        window.location.href = `post-list.html?category=${category}`;
+    }
+
+    const goUpdatePage = function(){
+        window.location.href = `post-write.html?category=${category}&id=${postId}`;
+    }
+
+    const deletePost = () => {
+        comm.requestAPI({
+            url: postUrl,
+            method: 'DELETE',
+            onSuccess: function (res) {
+              alert('삭제가 완료되었습니다.');
+              goList();
+            },
+
+            onError: function (err) {
+                console.error('게시물 삭제 중 오류 발생:', err);
+                alert('게시물 삭제에 실패했습니다.\n잠시 후 다시 시도해주세요.');
+            }
+        })
+    }
+
+    const initPostDetail = () => {
+        comm.requestAPI({
+            url: postUrl,
+            method: 'GET',
+            onSuccess: function (res) {
+
+                // 제목
+                document.querySelector('.post-title').innerText = res.title;
+
+                // 작성자 & 작성일
+                const createdDate = new Date(res.createdAt);
+                const formattedDate = comm.formatLocalDateTime(createdDate);
+
+                document.querySelector('.post-meta').innerText =
+                    `작성자: ${res.userName} | 작성일: ${formattedDate}`;
+
+                // 본문
+                document.querySelector('.post-content').innerText = res.content;
+
+
+              bindPostActions(res.userId);
+
+            },
+
+        })
+
+    }
+
+    // 버튼 바인딩
+    function bindPostActions(postUserId) {
+        const actions = document.getElementById('postActions');
+        const canEdit = isLogin && ((postUserId*1) === (sessionUserId*1));
+
+        if (!canEdit) {
+            actions.hidden = true;
+            return;
+        }
+
+        actions.hidden = false;
+    }
+
+    initPostDetail();
+
+
+</script>
 </body>
 </html>
+
+
