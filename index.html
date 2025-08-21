@@ -1,216 +1,348 @@
 ﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>AutoTrade - 자동매매 플랫폼</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoTrade - 자동매매 플랫폼</title>
 
-    <link rel="stylesheet" href="common.css">
-    <script type="text/javascript" src="common.js"></script>
-    <script>
-        comm.ready();
-    </script>
+  <link rel="stylesheet" href="common.css">
+  <style>
+    /* --- 페이지 전용 보조 스타일 --- */
+    .contents { max-width:1080px; margin:0 auto; padding:16px; }
+    .contents, .contents * { box-sizing:border-box; } /* 섹션 스코프 내 box-sizing 통일 */
+    .section-title{ font-weight:800; margin:14px 0 10px; line-height:1.25; }
+
+    /* ====== 단일 배너 (히어로) ====== */
+    .exchange-wrap{ margin-top:4px; }
+    .banner-hero{
+      position:relative; overflow:hidden;
+      border:1px solid #e5e7eb; border-radius:16px; background:#0f172a;
+      padding:20px; display:flex; flex-direction:column; gap:12px; color:#f8fafc;
+      min-width:0;
+    }
+    .banner-hero::before{
+      content:""; position:absolute; inset:-20%;
+      background:
+        radial-gradient(60% 60% at 20% 0%, rgba(99,102,241,.35), transparent 60%),
+        radial-gradient(50% 50% at 100% 100%, rgba(16,185,129,.25), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-group{ display:flex; align-items:center; gap:12px; z-index:1; min-width:0; }
+    .hero-icon{
+      width:42px; height:42px; border-radius:12px; display:grid; place-items:center;
+      background:#111827; border:1px solid #334155; font-size:20px; flex:0 0 auto;
+    }
+    .hero-text{ z-index:1; min-width:0; }
+    .hero-title{ font-size:18px; font-weight:800; line-height:1.2; word-break:keep-all; }
+    .hero-sub{ font-size:13px; font-weight:600; color:#cbd5e1; margin-top:2px; }
+    .hero-cta{
+      z-index:1; align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:12px; background:#22c55e; color:#052e16;
+      text-decoration:none; font-weight:800; border:1px solid rgba(0,0,0,.15);
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      white-space:nowrap;
+    }
+    .hero-cta:hover{ transform:translateY(-2px); box-shadow:0 10px 22px rgba(34,197,94,.3); }
+    .hero-cta small{ opacity:.9; font-weight:700; }
+    @media (min-width:640px){
+      .banner-hero{ padding:24px 28px; flex-direction:row; justify-content:space-between; align-items:center; }
+    }
+
+    /* ====== 프로모 영상 ====== */
+    .promo { margin-top:20px; }
+    .promo .video-wrap{
+      position:relative; width:100%; aspect-ratio:16/9;
+      background:#000; border-radius:12px; overflow:hidden; min-width:0;
+    }
+    .promo video{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* ====== 문의 섹션 (스코프 고정 + 깨짐 방지) ====== */
+    .inquiry { margin-top:22px; }
+    .inquiry .card{ border:1px solid #e5e7eb; border-radius:12px; padding:16px; background:#fff; }
+    .inquiry input, .inquiry textarea{
+      display:block; width:100%; border:1px solid #e5e7eb; border-radius:8px;
+      padding:10px 12px; font-size:14px; line-height:1.4; background:#fff;
+    }
+    .inquiry textarea{ min-height:110px; resize:vertical; }
+    .inquiry label{ display:block; font-size:12px; color:#6b7280; margin-bottom:6px; }
+    .inquiry .row{ display:grid; gap:12px; grid-template-columns:1fr; }
+    .inquiry .row > div{ min-width:0; }
+    @media (min-width:640px){ .inquiry .row{ grid-template-columns: repeat(3, 1fr); } }
+    .inquiry .actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:12px; flex-wrap:wrap; }
+    .btn{ appearance:none; border:1px solid #111827; background:#111827; color:#fff;
+      padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600; }
+    .btn.secondary{ background:#fff; color:#111827; }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed; }
+
+    /* ====== 개인정보 동의 (전부 .inquiry 스코프) ====== */
+    .inquiry .checkbox-group{ margin-top:12px; font-size:14px; }
+    .inquiry .checkbox-group *{ box-sizing:border-box; }
+    .inquiry .agree-line{ display:flex; align-items:flex-start; gap:8px; line-height:1.4; }
+    .inquiry .agree-line input{ margin-top:2px; flex:0 0 auto; width: 20px;}
+    .inquiry .agree-line label{ color:#111827; cursor:pointer; }
+    .inquiry .policy-link{
+      display:inline-block; margin-left:26px; margin-top:6px;
+      font-size:13px; color:#0f172a; text-decoration:underline;
+    }
+    .inquiry .desc{
+      margin-left:26px; margin-top:6px; font-size:13px; color:#555;
+      word-break:keep-all; overflow-wrap:break-word;
+    }
+    .inquiry .desc dl{ margin:0; display:grid; grid-template-columns:auto 1fr; gap:4px 10px; }
+    .inquiry .desc dt{ margin:0; font-weight:700; color:#111827; }
+    .inquiry .desc dd{ margin:0; }
+
+    .section-spacer{ height:24px; }
+  </style>
+
+  <script type="text/javascript" src="common.js"></script>
+  <script>comm.ready();</script>
 </head>
 <body>
-
-<!-- ✅ 헤더 -->
 <header>
-    <div class="logo" onclick="window.location.href='index.html'">
-        <h1>🤖 AutoTrade</h1>
-        <small>스마트한 자동매매 시스템</small>
+  <div class="logo" onclick="window.location.href='index.html'">
+    <h1>🤖 AutoTrade</h1>
+    <small>스마트한 자동매매 시스템</small>
+  </div>
+
+  <div class="hamburger" id="hamburger" aria-label="메뉴 열기" role="button" tabindex="0">
+    <div></div><div></div><div></div>
+  </div>
+
+  <nav id="navMenu">
+    <a href="post-list.html?category=notice">공지사항</a>
+    <a href="post-list.html?category=free">자유게시판</a>
+    <a href="post-list.html?category=review">후기게시판</a>
+    <a href="post-list.html?category=account" class="nav-acount" style="display: none;">회원목록</a>
+    <div class="signin-element"><a href="signin.html" class="auth-link">로그인</a></div>
+    <div class="signin-element"><a href="signup.html" class="auth-link">회원가입</a></div>
+    <div class="signout-element" style="display: none;"><a href="#" onclick="comm.signout();" class="auth-link">로그아웃</a></div>
+  </nav>
+
+  <div class="auth-buttons">
+    <div class="signin-element">
+      <a href="signin.html">로그인</a>
+      <a href="signup.html">회원가입</a>
     </div>
-
-    <div class="hamburger" id="hamburger" aria-label="메뉴 열기" role="button" tabindex="0">
-        <div></div>
-        <div></div>
-        <div></div>
+    <div class="signout-element" style="display: none;">
+      <a href="#" onclick="comm.signout();">로그아웃</a>
     </div>
-
-    <nav id="navMenu">
-        <a href="post-list.html?category=notice">공지사항</a>
-        <a href="post-list.html?category=free">자유게시판</a>
-        <a href="post-list.html?category=review">후기게시판</a>
-        <a href="post-list.html?category=account" class="nav-acount" style="display: none;">회원목록</a>
-        <div class="signin-element">
-            <a href="signin.html" class="auth-link">로그인</a>
-        </div>
-        <div class="signin-element">
-            <a href="signup.html" class="auth-link">회원가입</a>
-        </div>
-        <div class="signout-element" style="display: none;">
-            <a href="#" onclick="comm.signout();"  class="auth-link">로그아웃</a>
-        </div>
-    </nav>
-
-    <div class="auth-buttons">
-        <div class="signin-element">
-            <a href="signin.html">로그인</a>
-            <a href="signup.html">회원가입</a>
-        </div>
-
-        <div class="signout-element" style="display: none;">
-            <a href="#" onclick="comm.signout();">로그아웃</a>
-        </div>
-    </div>
+  </div>
 </header>
 
-<!-- ✅ 메인 -->
 <main>
+  <section class="contents">
+    <!-- (1) 거래소 배너 -->
+    <div class="section-title">🚀 거래소 빠른 가입</div>
+    <div class="exchange-wrap">
+      <div class="banner-hero" aria-label="거래소 가입 히어로 배너">
+        <div class="hero-group">
+          <div class="hero-icon">🚀</div>
+          <div class="hero-text">
+            <div class="hero-title">지금 바로 가입하고 자동매매 시작</div>
+            <div class="hero-sub">수수료 혜택과 함께, 손쉬운 연동으로 빠르게 거래를 시작하세요.</div>
+          </div>
+        </div>
+        <a class="hero-cta" href="https://YOUR_SIGNUP_LINK_HERE" target="_blank" rel="noopener">
+          바로 가입하기 <small>→</small>
+        </a>
+      </div>
+    </div>
 
-    <section class="board-section">
-        <div class="section-title">📢 공지사항</div>
-        <div class="notice-list"></div>
-    </section>
+    <!-- (2) 홍보 영상 -->
+    <div class="promo">
+      <div class="section-title">🎬 플랫폼 소개 영상</div>
+      <div class="video-wrap">
+        <video id="promoVideo" src="assets/promo.mp4" poster="assets/promo-poster.jpg"
+               autoplay muted loop playsinline controls
+               controlsList="nodownload noplaybackrate"
+               oncontextmenu="return false">
+          브라우저가 video 태그를 지원하지 않습니다.
+        </video>
+      </div>
+    </div>
 
-    <section class="board-section">
-        <div class="section-title">📌 자유게시판</div>
-        <div class="free-list"></div>
-    </section>
+    <!-- (3) 문의 섹션 -->
+    <div class="inquiry">
+      <div class="section-title">✉️ 문의하기</div>
+      <div class="card">
+        <form id="inquiryForm" novalidate>
+          <div class="row">
+            <div>
+              <label for="inqName">이름</label>
+              <input id="inqName" name="name" type="text" placeholder="홍길동" required />
+            </div>
+            <div>
+              <label for="inqPhone">휴대폰번호</label>
+              <input id="inqPhone" name="phoneNumber" type="tel" inputmode="tel"
+                     placeholder="010-1234-5678"
+                     pattern="^0\\d{1,2}-?\\d{3,4}-?\\d{4}$" required />
+            </div>
+            <div>
+              <label for="inqEmail">이메일</label>
+              <input id="inqEmail" name="email" type="email" placeholder="name@example.com" required />
+            </div>
+          </div>
 
-    <section class="board-section">
-        <div class="section-title">⭐ 후기게시판</div>
-        <div class="review-list"></div>
-    </section>
+          <div style="margin-top:12px">
+            <label for="inqMessage">문의 내용</label>
+            <textarea id="inqMessage" name="message" placeholder="문의 내용을 작성해주세요." required></textarea>
+          </div>
 
-    <section class="board-section account-list-area" style="display: none;">
-        <div class="section-title">👤 회원목록</div>
-        <div class="account-list"></div>
-    </section>
+          <!-- ✅ 개인정보 동의 (폼 내부, 스코프 고정) -->
+          <div class="checkbox-group" id="privacyBlock">
+            <div class="agree-line">
+              <input type="checkbox" id="agreePrivacy" name="agreePrivacy" required>
+              <label for="agreePrivacy">개인정보 수집 및 이용에 동의합니다.</label>
+            </div>
+
+            <a class="policy-link" href="privacy.html" target="_blank" rel="noopener noreferrer">
+              개인정보 처리방침 보기
+            </a>
+
+            <div class="desc" aria-live="polite">
+              <dl>
+                <dt>수집목적</dt><dd>문의 접수 및 응답, 서비스 개선</dd>
+                <dt>수집항목</dt><dd>이름, 휴대폰번호, 이메일, 문의내용</dd>
+                <dt>보유기간</dt><dd>문의 처리 완료 후 1년간 보관 후 파기</dd>
+                <dt>제3자 제공</dt><dd>없음 (제공 시 별도 동의 받음)</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="reset" class="btn secondary">초기화</button>
+            <button id="submitBtn" type="submit" class="btn" disabled>문의 접수</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-spacer"></div>
+
+  <!-- (4) 기존 리스트 -->
+  <section class="board-section">
+    <div class="section-title">📢 공지사항</div>
+    <div class="notice-list"></div>
+  </section>
+
+  <section class="board-section">
+    <div class="section-title">📌 자유게시판</div>
+    <div class="free-list"></div>
+  </section>
+
+  <section class="board-section">
+    <div class="section-title">⭐ 후기게시판</div>
+    <div class="review-list"></div>
+  </section>
+
+  <section class="board-section account-list-area" style="display: none;">
+    <div class="section-title">👤 회원목록</div>
+    <div class="account-list"></div>
+  </section>
 </main>
 
-<!-- ✅ 푸터 -->
 <footer>
-    <p><strong>AutoTrade</strong> <!--| 대표: 홍길동 | 이메일: contact@autotrade.com--></p>
-    <!--    <p>주소: 서울특별시 강남구 테헤란로 123 | 사업자등록번호: 123-45-67890</p>-->
-    <p>
-        <a href="terms.html">이용약관</a> |
-        <a href="privacy.html">개인정보처리방침</a>
-    </p>
-    <p>&copy; 2025 AutoTrade. All rights reserved.</p>
+  <p><strong>AutoTrade</strong></p>
+  <p><a href="terms.html">이용약관</a> | <a href="privacy.html">개인정보처리방침</a></p>
+  <p>&copy; 2025 AutoTrade. All rights reserved.</p>
 </footer>
 
 <script>
+  // 🔁 목록 렌더(기존 로직 유지)
+  const renderPostList = (url, category, renderTarget) => {
+    comm.requestAPI({
+      url, method:'GET', data:{limit:5},
+      onSuccess: function (res) {
+        let listHtml = `<div class="no-posts">작성된 글이 없습니다.</div>`;
+        if (res?.data && res?.data.length > 0) {
+          let html = '<ul class="post-list">';
+          res.data.forEach(item => {
+            const title = item.title || '';
+            const link = `post-detail.html?id=${item.id}&category=${category}`;
+            html += `<li><a href="${link}">${title}</a></li>`;
+          });
+          html += '</ul>';
+          listHtml = html;
+        }
+        document.querySelector(`${renderTarget}`).innerHTML = listHtml;
+      },
+      onError: function () {
+        document.querySelector(`${renderTarget}`).innerHTML =
+          `<div class="no-posts">작성된 글이 없습니다.</div>`;
+      }
+    })
+  }
 
-    // // POST 요청 예시
-    // requestAPI({
-    //     url: '/api/users',
-    //     method: 'POST',
-    //     data: {name: 'Han', age: 35},
-    //     onSuccess: function (res) {
-    //         console.log('성공:', res);
-    //     },
-    //     onError: function (err) {
-    //         console.error('실패:', err.message);
-    //         alert(err.message);
-    //     }
-    // });
-    //
-    // // GET 요청 예시
-    // requestAPI({
-    //     url: '/api/users',
-    //     method: 'GET',
-    //     data: {page: 1, limit: 10},
-    //     onSuccess: function (res) {
-    //         console.log('리스트:', res);
-    //     },
-    //     onError: function (err) {
-    //         console.error('에러:', err.message);
-    //     }
-    // });
+  const renderUserList = (url, category, renderTarget) => {
+    comm.requestAPI({
+      url, method:'GET', data:{limit:5},
+      onSuccess: function (res) {
+        let listHtml = `<div class="no-posts">등록된 회원이 없습니다.</div>`;
+        if (res?.data && res?.data.length > 0) {
+          let html = '<ul class="post-list">';
+          res.data.forEach(item => {
+            const title = `${item.name}(${item.email}) / ${item.phoneNumber} / ${comm.getGender(item.gender)}`
+            html += `<li><a>${title}</a></li>`;
+          });
+          html += '</ul>';
+          listHtml = html;
+        }
+        document.querySelector(`${renderTarget}`).innerHTML = listHtml;
+      },
+      onError: function () {
+        document.querySelector(`${renderTarget}`).innerHTML =
+          `<div class="no-posts">등록된 회원이 없습니다.</div>`;
+      }
+    })
+  }
 
-    const renderPostList = (url, category, renderTarget) => {
-        comm.requestAPI({
-            url: url,
-            method: 'GET',
-            data: {limit: 5},
-            onSuccess: function (res) {
+  // ✅ 폼 바인딩 + 동의 체크 UX 강화
+  (function bindInquiryForm(){
+    const $form = document.getElementById('inquiryForm');
+    const $agree = document.getElementById('agreePrivacy');
+    const $submit = document.getElementById('submitBtn');
+    if(!$form) return;
 
-                let listHtml = `
-                <div class="no-posts">
-                    작성된 글이 없습니다.
-                </div>
-            `
+    const toggleSubmit = () => { if($submit) $submit.disabled = !$agree.checked; };
+    if($agree){ $agree.addEventListener('change', toggleSubmit); toggleSubmit(); }
 
-                if (res?.data && res?.data.length > 0) {
-                    let html = '<ul class="post-list">';
+    $form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!$form.checkValidity()){
+        $form.reportValidity();
+        return;
+      }
 
-                    res.data.forEach(item => {
-                        const title = item.title || '';
-                        const link = `post-detail.html?id=${item.id}&category=${category}`;
-                        html += `<li><a href="${link}">${title}</a></li>`;
-                    });
+      const payload = {
+        name: $form.name.value?.trim(),
+        phoneNumber: $form.phoneNumber.value?.trim(),
+        email: $form.email.value?.trim(),
+        message: $form.message.value?.trim(),
+        agreePrivacy: $agree?.checked === true
+      };
 
-                    html += '</ul>';
+      comm.requestAPI({
+        url: '/inquiries', method: 'POST', data: payload,
+        onSuccess: function(){
+          alert('문의가 접수되었습니다. 빠르게 연락드릴게요!');
+          $form.reset();
+          toggleSubmit();
+        },
+        onError: function(err){
+          console.error(err);
+          alert(err?.message || '문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }
+      });
+    });
+  })();
 
-                    listHtml = html;
-
-                }
-
-                document.querySelector(`${renderTarget}`).innerHTML = listHtml;
-            },
-
-            onError: function () {
-                let listHtml = `
-                <div class="no-posts">
-                    작성된 글이 없습니다.
-                </div>
-            `
-
-                document.querySelector(`${renderTarget}`).innerHTML = listHtml;
-            }
-        })
-    }
-
-
-    const renderUserList = (url, category, renderTarget) => {
-        comm.requestAPI({
-            url: url,
-            method: 'GET',
-            data: {limit: 5},
-            onSuccess: function (res) {
-
-                let listHtml = `
-                <div class="no-posts">
-                    등록된 회원이 없습니다.
-                </div>
-            `
-
-                if (res?.data && res?.data.length > 0) {
-                    let html = '<ul class="post-list">';
-
-                    res.data.forEach(item => {
-                        const title = `${item.name}(${item.email}) / ${item.phoneNumber} / ${comm.getGender(item.gender)}`
-                        html += `<li><a>${title}</a></li>`;
-                    });
-
-                    html += '</ul>';
-
-                    listHtml = html;
-
-                }
-
-                document.querySelector(`${renderTarget}`).innerHTML = listHtml;
-            },
-            onError: function () {
-                let listHtml = `
-                <div class="no-posts">
-                    등록된 회원이 없습니다.
-                </div>
-            `
-
-                document.querySelector(`${renderTarget}`).innerHTML = listHtml;
-            }
-        })
-    }
-
-
-    renderPostList("/posts/notice", "notice", ".notice-list");
-    renderPostList("/posts/free", "free", ".free-list");
-    renderPostList("/posts/review", "review", ".review-list");
-    renderUserList("/users", "user", ".account-list");
-
+  // ✅ 초기 렌더
+  renderPostList("/posts/notice", "notice", ".notice-list");
+  renderPostList("/posts/free", "free", ".free-list");
+  renderPostList("/posts/review", "review", ".review-list");
+  renderUserList("/users", "user", ".account-list");
 </script>
-
-
 </body>
 </html>

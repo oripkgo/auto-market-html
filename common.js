@@ -1,4 +1,19 @@
-const apiUrl = "http://localhost:3000";
+﻿const apiUrl = "https://api.autoyycompany.com";
+
+<!--Start of Tawk.to Script-->
+
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/68980713e0fd9f192a10fd60/1j28ut8gc';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+
+<!--End of Tawk.to Script-->
+
 const common = {
     ready: function () {
         document.addEventListener('DOMContentLoaded', () => {
@@ -39,6 +54,7 @@ const common = {
                     document.querySelector('.account-list-area').style.display = '';
                 }
             }
+			
         });
     },
 
