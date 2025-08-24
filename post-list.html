@@ -156,6 +156,7 @@
         <a href="post-list.html?category=notice">공지사항</a>
         <a href="post-list.html?category=free">자유게시판</a>
         <a href="post-list.html?category=review">후기게시판</a>
+        <a href="post-list.html?category=inquiry" class="nav-inquiry" style="display: none;">고객문의</a>
         <a href="post-list.html?category=account" class="nav-acount" style="display: none;">회원목록</a>
         <div class="signin-element">
             <a href="signin.html" class="auth-link">로그인</a>
@@ -233,7 +234,11 @@
         document.title = "후기게시판 | AutoTrade";
         document.querySelector('.post-title').innerText = "후기게시판";
 
-    } else if (category === 'account') {
+    } else if (category === 'inquiry') {
+        document.title = "고객문의 | AutoTrade";
+        document.querySelector('.post-title').innerText = "고객문의";
+    }
+    else if (category === 'account') {
         document.title = "회원목록 | AutoTrade";
         document.querySelector('.post-title').innerText = "회원목록";
     }
@@ -257,20 +262,43 @@
 
         for (const post of pagePosts) {
             const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = `post-detail.html?id=${post.id}&category=${category}`;
-            a.textContent = post.title;
-            a.className = 'title';
+            
 
-            const meta = document.createElement('div');
-            meta.className = 'post-meta';
-            meta.innerHTML = `
-        <span>작성자: ${post.userName}</span>
-        <span>작성일: ${comm.formatLocalDateTime(post.createdAt)}</span>
-      `;
 
-            li.appendChild(a);
-            li.appendChild(meta);
+            if(category === 'inquiry'){
+                    
+                const meta = document.createElement('div');
+                meta.className = 'post-meta';
+                meta.innerHTML = `
+            ${category === 'inquiry'?`<span>${post.content}</span><br><br>`:''}
+
+
+                ${post.userName?`<span>작성자: ${post.userName}</span>`:''}
+            <span>작성일: ${comm.formatLocalDateTime(post.createdAt)}</span>
+        `;
+
+                li.appendChild(meta);
+            }else{
+                const a = document.createElement('a');
+                a.href = `post-detail.html?id=${post.id}&category=${category}`;
+                a.textContent = post.title;
+                a.className = 'title';
+                const meta = document.createElement('div');
+                meta.className = 'post-meta';
+                meta.innerHTML = `
+
+
+                ${post.userName?`<span>작성자: ${post.userName}</span>`:''}
+            <span>작성일: ${comm.formatLocalDateTime(post.createdAt)}</span>
+        `;
+
+                li.appendChild(a);
+                li.appendChild(meta);
+            }
+
+
+
+            
             postListEl.appendChild(li);
         }
     }
@@ -423,6 +451,11 @@
             canEdit = false;
         }
 
+        if( category === 'inquiry' ){
+            canEdit = false;
+        }
+
+
         if (!canEdit) {
             postWriteButton.hidden = true;
             return;
@@ -433,6 +466,7 @@
 
     bindPostWriteButton();
 
+    
     if (category === 'account') {
         renderUserList(postUrl, category, "#postList");
     } else {

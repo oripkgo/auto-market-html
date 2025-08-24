@@ -11,7 +11,7 @@ html {
 
 
 header {
-    background-color: #333;
+    background-color: #fff;
     color: white;
     padding: 15px 20px;
     display: flex;
@@ -30,10 +30,11 @@ header {
 .logo h1 {
     margin: 0;
     font-size: 1.5em;
+    color: #f97316;
 }
 
 .logo small {
-    color: #ccc;
+    color: #374151;
     font-size: 0.9em;
 }
 
@@ -44,7 +45,7 @@ nav {
 }
 
 nav a {
-    color: white;
+    color: #374151;
     margin: 0 10px;
     text-decoration: none;
 }
@@ -57,10 +58,11 @@ nav a:hover {
     flex: 1;
     min-width: 200px;
     text-align: right;
+
 }
 
 .auth-buttons a {
-    color: white;
+    color: #374151;
     margin-left: 10px;
     text-decoration: none;
     border: 1px solid white;
@@ -85,7 +87,7 @@ nav a:hover {
 
 .hamburger div {
     height: 4px;
-    background-color: white;
+    background-color: #374151;
     border-radius: 2px;
 }
 
@@ -204,6 +206,7 @@ footer a:hover {
     /* 네비 메뉴 열렸을 때 */
     nav.show {
         display: flex;
+        background-color: white;
     }
 
     nav a {

@@ -114,22 +114,6 @@
       margin-bottom: 14px;
       padding-left:12px;
     }
-
-   .inquiry textarea {
-      width: 100%;
-      padding: 12px 0;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      margin-bottom: 14px;
-      padding-left:12px;
-      min-height: 150px; /* ✅ 기본 높이 늘리기 */
-    }
-
-    .inquiry .inquiry-submit-box {
-      margin-top: 20px;
-      text-align: right;
-    }
-
     .inquiry button {
       padding: 14px 20px;
       border: none; border-radius: 8px;
@@ -297,18 +281,17 @@
 <section class="section">
   <h2 class="section-title">✉️ 문의하기</h2>
   <div class="inquiry">
-    <form id="inquiryForm">
+    <form id="inquiryForm" method="post">
       <label>이름</label>
       <input type="text" id="name" required>
       <label>휴대폰번호</label>
-      <input type="tel" id="phone" required pattern="^\d{3}-\d{3,4}-\d{4}$" title="예: 010-1234-5678 또는 010-123-5678 형식으로 입력하세요">
+      <input type="tel" id="phone" required>
       <label>이메일</label>
-      <input type="email" id="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-           title="올바른 이메일 형식을 입력하세요. 예: example@domain.com">
+      <input type="email" id="email" required>
       <label>문의 내용</label>
-      <textarea id="content"></textarea>
-      
-    
+      <textarea id="message" required></textarea>
+      <button type="submit">문의 접수</button>
+    </form>
 
     <div class="privacy">
       <div class="top-line">
@@ -327,13 +310,8 @@
           <li><strong>제3자 제공</strong> 없음 (제공 시 별도 동의 받음)</li>
         </ul>
       </div>
-      
-    </div>
-    <div class="inquiry-submit-box">
-      <button type="submit">문의 접수</button>
     </div>
 
-  </form>
 </section>
 
 </main>
@@ -394,16 +372,14 @@
 
   // ✅ 폼 바인딩 + 동의 체크 UX 강화
   // 문의하기 이벤트
-  
-
   const form = document.getElementById('inquiryForm');
-  form.addEventListener('submit', async function(e){
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
 
     const name = document.getElementById('name').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const email = document.getElementById('email').value.trim();
-    let content = document.getElementById('content').value.trim();
+    const message = document.getElementById('message').value.trim();
     const agree = document.getElementById('agree').checked;
 
     if (!agree) {
@@ -411,29 +387,12 @@
       return;
     }
 
-    if (name && phone && email ) {
-
-      content = content.replace(/\n/g, '<br>');
-
-
-      comm.requestAPI({
-        url: "/posts/inquiry",
-        method: "POST",
-        data: { name, phone, email, content },
-        onSuccess: function () {
-          
-          alert("문의가 성공적으로 접수되었습니다. 빠른 시일 내 연락드리겠습니다.");
-          form.reset();
-        },
-        onError: function (err) {
-          console.error(err);
-          alert("문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-        }
-      });
+    if (name && phone && email && message) {
+      alert("문의가 성공적으로 접수되었습니다. 빠른 시일 내 연락드리겠습니다.");
+      form.reset();
     } else {
       alert("모든 필드를 입력해주세요.");
     }
-
   });
 
   // ✅ 초기 렌더

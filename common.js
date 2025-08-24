@@ -1,4 +1,5 @@
 ﻿const apiUrl = "https://api.autoyycompany.com";
+// const apiUrl = "http://localhost:3000";
 
 <!--Start of Tawk.to Script-->
 
@@ -48,6 +49,10 @@ const common = {
             if ((userLevel * 1) >= 8) {
                 if (document.querySelector('.nav-acount')) {
                     document.querySelector('.nav-acount').style.display = '';
+                }
+
+                if (document.querySelector('.nav-inquiry')) {
+                    document.querySelector('.nav-inquiry').style.display = '';
                 }
 
                 if (document.querySelector('.account-list-area')) {
